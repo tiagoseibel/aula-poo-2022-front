@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+    <div class="container">
+        <div class="grid">
+            <div class="col-12 p-fluid">
+                <label>Nome</label>
+                <input type="text" pInputText name="nome" formControlName="nome" />
+            </div>
+            <div class="col-12">
+                <button pButton class="p-button-primary" (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<p-table [value]="pessoas" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Codigo</th>
+            <th>Nome</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pessoa>
+        <tr>
+            <td>{{pessoa.id}}</td>
+            <td>{{pessoa.nome}}</td>
+        </tr>
+    </ng-template>
+</p-table>
