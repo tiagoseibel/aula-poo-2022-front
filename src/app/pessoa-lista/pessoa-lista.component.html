@@ -18,7 +18,11 @@
                 <td>{{pessoa.nome}}</td>
                 <td>{{pessoa.endereco}}</td>
                 <td>{{pessoa?.departamento?.nome}}</td>
-                <td><i class="pi pi-pencil" (click)="editar(pessoa.id)"></i></td>
+                <td>
+                    <i class="pi pi-pencil" (click)="editar(pessoa.id)"></i>
+                    &nbsp;
+                    <i class="pi pi-eraser" (click)="remover(pessoa.id)"></i>
+                </td>
             </tr>
         </ng-template>
     </p-table>

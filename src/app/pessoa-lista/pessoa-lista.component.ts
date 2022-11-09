@@ -17,15 +17,30 @@ export class PessoaListaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.listarTodos();
+  }
+
+  editar(id: any): void {
+    this.router.navigate(['pessoas', id]);
+  }
+
+  remover(id: any): void {
+    let opt = confirm("De acordo?");
+    if (opt) {
+      this.service.delete(id).subscribe(
+        (response) => {
+          this.listarTodos();
+        }
+      );
+    }
+  }
+
+  listarTodos(): void {
     this.service.listar().subscribe(
       (response) => {
         this.pessoas = response
       }
     );
-  }
-
-  editar(id: any): void {
-    this.router.navigate(['pessoas', id]);
   }
 
 }

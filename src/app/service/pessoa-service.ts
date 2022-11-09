@@ -26,4 +26,8 @@ export class PessoaService {
     byId(id: Number) : Observable<any> {
         return this.http.get(this.apiUrl + "/" + id);
     }
+
+    delete(id: Number) : Observable<any> {
+        return this.http.delete(this.apiUrl + "/" + id);
+    }
 }
