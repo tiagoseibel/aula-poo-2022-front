@@ -1,0 +1,25 @@
+<div class="page">
+    <div>
+        <button pButton label="Novo Cadastro" [routerLink]="['/pessoas/novo']"></button>
+    </div>
+    <p-table [value]="pessoas" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Codigo</th>
+                <th>Nome</th>
+                <th>Endereço</th>
+                <th>Departamento</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pessoa>
+            <tr>
+                <td>{{pessoa.id}}</td>
+                <td>{{pessoa.nome}}</td>
+                <td>{{pessoa.endereco}}</td>
+                <td>{{pessoa?.departamento?.nome}}</td>
+                <td><i class="pi pi-pencil" (click)="editar(pessoa.id)"></i></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

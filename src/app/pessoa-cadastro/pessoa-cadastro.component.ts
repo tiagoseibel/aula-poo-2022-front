@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PessoaService } from './pessoa-service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { switchMap } from 'rxjs';
+import { PessoaService } from '../service/pessoa-service';
 
 @Component({
   selector: 'app-pessoa-cadastro',
@@ -9,34 +11,48 @@ import { PessoaService } from './pessoa-service';
 })
 export class PessoaCadastroComponent implements OnInit {
 
-  pessoas: Array<any> = [];
+  departamentos = [{
+    id: 1,
+    nome: "TI"
+  }];
+
   form!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
-    private service: PessoaService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: PessoaService
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group(
       {
         id: [],
-        nome: [null, Validators.required]
+        nome: [null, Validators.required],
+        endereco: [null],
+        departamento: new FormControl()
       }
     );
 
-    this.service.listar().subscribe(
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.preencherForm(id);
+    }
+  }
+
+  preencherForm(id: any): void {
+    this.service.byId(id).subscribe (
       (response) => {
-        this.pessoas = response
+        this.form.patchValue(response);
       }
     );
   }
 
   save(): void {
-    console.log("Ok...");
-    console.log(this.form.value);
-
-    this.service.create(this.form.value).subscribe(
+    this.service.createOrUpdate(this.form.value).subscribe(
       (response) => {
-        console.log(response);
+        this.router.navigate(['/pessoas']);
       }
     )
     this.form.reset();
